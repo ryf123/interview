@@ -1,0 +1,10 @@
+class Solution:
+    # @param {string} s
+    # @return {integer}
+    def lengthOfLastWord(self, s):
+        l = len(s)
+        if l==0:
+            return 0
+        a = s.split()
+        return len(s[-1])
+        
