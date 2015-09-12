@@ -7,15 +7,18 @@ class Solution(object):
 		"""
 		if divisor == 0:
 			return 2147483647
+
 		ret = self.conmpute(abs(dividend),abs(divisor),0)
+
 		if dividend < 0 and divisor > 0:
 			if abs(dividend) % abs(divisor):
-				return 0-ret-1
+				return 0-ret
 			else:
 				return 0-ret
 		elif divisor < 0 and dividend > 0:
+			# print ret
 			if abs(dividend) % abs(divisor):
-				return 0-ret-1
+				return 0-ret
 			else:
 				return 0-ret
 		else:
@@ -48,9 +51,11 @@ class Solution(object):
 				# print sol,currentcol,dividend,divisor
 				return self.conmpute(dividend,divisor,sol+currentcol)
 s = Solution()
-div = -5
-for x in range(3,10000):
-	if s.divide(x,div) != x/div:
-		print x,s.divide(x,div),x/div
+# div = -5
+# for x in range(3,10000):
+# 	if s.divide(x,div) != x/div:
+# 		print x,s.divide(x,div),x/div
 print s.divide(-2147483648,-1)
 print s.divide(-2147483650, 1)
+print s.divide(1026117192, -874002063)
+print s.divide(-1039162657, 490823224)
