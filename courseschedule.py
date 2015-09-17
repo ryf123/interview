@@ -5,34 +5,30 @@ class Solution(object):
 		:type prerequisites: List[List[int]]
 		:rtype: List[int]
 		"""
-		def dfs(node):
-			# print self.visited
-			if self.visited[node] == 1:
-				return True
-			if self.visited[node] == -1:
-				return False
-			self.visited[node] = -1
-			if node in d:
-				for edge in d[node]:
-					if not dfs(edge):
-						return False
-			self.visited[node] = 1
-			self.ret.append(node)
-			return True
-		self.visited = [0] * numCourses
+		ret = []
+		nopre = []
 		d = {}
-		self.ret = []
-		for p in prerequisites:
-			if p[0] in d:
-				d[p[0]].append(p[1])
-			else:
-				d[p[0]] = [p[1]]
-		# print d
-		for node in xrange(numCourses):
-			if not dfs(node):
-				return []
-		return self.ret
+		for x in xrange(numCourses):
+			d[x] = {}
+		for prerequisite in prerequisites:
+			d[prerequisite[0]][prerequisite[1]] = True
+		for key in d:
+			if len(d[key]) == 0:
+				nopre.append(key)
+		while len(nopre):
+			course = nopre.pop()
+			del d[course]
+			ret.append(course)
+			for key in d:
+				if course in d[key]:
+					del d[key][course]
+					if len(d[key]) == 0:
+						nopre.append(key)
+		# print ret
+		return ret if len(ret) == numCourses else []
+
+
 s = Solution()
-numCourses = 2
-prerequisites = [[1,0],[0,1]]
+numCourses = 3
+prerequisites = [[1,0],[0,2],[1,2]]
 print s.findOrder(numCourses,prerequisites)

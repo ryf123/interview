@@ -2,56 +2,42 @@ class Solution:
 	# @param {integer} n
 	# @return {string[][]}
 	def solveNQueens(self, n):
-		def solve(board,col,n):
-			#print (board,col,n)
-			if col >= n:
-				return (True,board)
-			for i in range(0,n):
-				#print i
-				if(self.isSafe(board,i,col,n)):
-					board[i][col] = 1
-					ret,myboard = solve(board,col+1,n)
-					if ret : # if there is one solution,then continue with other solution						
-						result.append(self.convertboard(myboard))
-						#print result
-						#print ret
-					board[i][col] = 0
-			return (False,result)
-		board = [[0]*n for x in range(0,n)]
-		#print board
-		result = []
-		ret,board = solve(board,0,n)		
-		return result
-	def convertboard(self,board):
-		result = []
-		for i in board:
-			temp = ""
-			for j in i:
-				if j:
-					temp+="Q"
-				else:
-					temp+="."
-			result.append(temp)
-		return result
-	def isSafe(self,board,x,y,n):
-		for i in range(0,y):
-			if(board[x][i]):
+		board = [["."]*n for x in xrange(n)]
+		self.n = n
+		sols = {}
+		self.ret = []
+		self.solve(board,0,sols)
+		return self.ret
+	def solve(self,board,row,sols):
+		# print board
+		if row ==self.n:
+			result = []
+			for b in board:
+				result.append("".join(b))
+			self.ret.append(result)
+			return True
+		for x in xrange(self.n):
+			sols[row] = x
+			board[row][x] = "Q"
+			if self.isValid(board,sols,row,x):
+				self.solve(board,row+1,sols)
+			board[row][x] = "."
+		del sols[row]
+		return False
+	def isValid(self,board,sols,row,col):
+		# print row,col
+		for key in sols:
+			if sols[key] == col and key!= row:
 				return False
-		i = x
-		j = y
-		while(i>= 0 and j>=0):
-			if board[i][j]:
-				return False
-			i-=1
-			j-=1
-		i = x
-		j = y
-		while(j>=0 and i <n):
-			if board[i][j]:
-				return False
-			i+=1
-			j-=1
+		for x in range(-self.n,self.n):
+			if row +x < self.n and row+x >=0:
+				if col+x < self.n and col+x >=0:
+					if board[row+x][col+x] == "Q" and x!=0:
+						return False
+				if col-x <self.n and col-x>=0:
+					if board[row+x][col-x] == "Q" and x!=0	:
+						return False
 		return True
-
 s = Solution()
-print s.solveNQueens(8)
+ret =  s.solveNQueens(8)
+print len(ret)

@@ -15,19 +15,21 @@ class Solution(object):
 			return []
 		stack = [root]
 		ret = []
-		while (len(stack) >0):
+		while len(stack):
 			node = stack[-1]
-			if node.left == None and node.right == None:
-				toadd = stack.pop()
-				ret.append(toadd)
-				continue
-			if node.right != None:
-				stack.append(node.right)
-				node.right = None
-			if node.left != None:
-				stack.append(node.left)
-				node.left = None
-		return [r.val for r in ret]
+			r,l = node.right,node.left
+			if not r and not l:
+				val = stack.pop().val
+				ret.append(val)
+			else:
+				if r!= None:
+					stack.append(r)
+				if l!= None:
+					stack.append(l)
+				node.left,node.right = None,None
+		return ret
+
+
 s = Solution()
 root = TreeNode(2)
 root.left = TreeNode(1)
