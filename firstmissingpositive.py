@@ -5,14 +5,26 @@ class Solution(object):
 		:rtype: int
 		"""
 		nums.append(0)
-		m = max(nums)+1
-		bucket = [0]*m
-		for num in nums:
-			if num > 0:
-				bucket[num] = num
-		for i in range(1,m):
-			if bucket[i] != i:
-				return i
-		return m
+		for i,num in enumerate(nums):
+			self.swap(nums,num)
+		# print nums
+		maxval = 0
+		for i,num in enumerate(nums):
+			if i >=0 :
+				if num != i:
+					return i
+			maxval = max(maxval,num)
+		if len(nums)==0:
+			return 1
+		return maxval+1 if nums[0] != 1 else 2
+	def swap(self,nums,num):
+		if num < len(nums) and num >=0 and nums[num] != num:
+			temp = nums[num]
+			nums[num] = num
+			if temp >=0:
+				self.swap(nums,temp)
+
 s = Solution()
-print s.firstMissingPositive([-1,-2,-3])
+tests = [[3,4,-1,1],[1],[2],[3,1],[-1,0],[],[2,1],[1,2,3]]
+for t in tests:
+	print t,s.firstMissingPositive(t)
