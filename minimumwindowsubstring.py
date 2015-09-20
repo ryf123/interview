@@ -54,4 +54,4 @@ class Solution(object):
 sl = Solution()
 s = "a"
 t = "abc"
-print sl.minWindow(s,t)
+print sl.minWindow(t,s)

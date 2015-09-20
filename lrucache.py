@@ -1,3 +1,5 @@
+# double link list so that delete complexity is O(1)
+# dict is used to store point to quickly get value
 class Node:
     def __init__(self,key,val):
         self.val = val

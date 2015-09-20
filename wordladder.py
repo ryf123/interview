@@ -1,3 +1,8 @@
+# because word amount is large，so instead of looks for word in dict, we change the character in start word
+# it's easy to find if start can be changed end word, just use dfs
+# but to list all possbilities, we need to use bfs
+# new class will be needed to store the current word and point to prev word, thus when the end word is found, we trace back 
+# to start word
 import sys
 class Solution(object):
 	def findLadders(self, start, end, wordlist):

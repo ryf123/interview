@@ -1,3 +1,4 @@
+# trie tree to store words
 class TreeNode:
 	def __init__(self,val):
 		self.val = val

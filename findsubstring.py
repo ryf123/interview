@@ -5,47 +5,64 @@ class Solution:
 	def findSubstring(self, s, words):
 		ret = []
 		nw = len(words)
-		#words = sorted(words) #sort the word
-		#words = "".join(words) # concatenate words into a long string
 		if nw == 0:
 			return ret
 		wl = len(words[0])
-		csl = wl *nw
-		sl = len(s)
-		if(sl < csl):
-			return ret
-		i = 0
-		worddict ={}
+		i,l = 0,len(s)
+		wordsdict = {}
+		hashsumtotal = 0
 		for word in words:
-			if word in worddict:
-				worddict[word] +=1
+			if word in wordsdict:
+				wordsdict[word] +=1
 			else:
-				worddict[word] =1
-		print worddict
-		while( i < sl - csl+1): 
-			# break the string into equal length of words and compare with words
-			temparray = []
-			tempworddict = {}
-			for j in range(0,nw):
-				word = s[j*wl+i:i+wl*(j+1)]
-				if word in tempworddict:
-					tempworddict[word] +=1
-				else:
-					tempworddict[word] =1 
-			match = True
-			for word in words:
-				if word in tempworddict:
-					if worddict[word] != tempworddict[word]:
-						match = False
+				wordsdict[word] = 1
+			hashsumtotal += hash(word)
+			# print hash(word)
+		hashtable = [0]*l
+		for i,c in enumerate(s):
+			hashtable[i] = hash(s[i:i+wl])
+		ret = []
+		# print hashtable
+		i=0
+		while i<l-nw*wl+1:
+			# print hashtable[i:i+nw*wl:wl]
+			if sum(hashtable[i:i+nw*wl:wl]) != hashsumtotal:
+				i+=1
+				continue
+			j=i
+			tempdict = wordsdict.copy()
+			wordcount = 0
+			while j+wl <= l and wordcount<nw and s[j:j+wl] in wordsdict:
+
+				subword = s[j:j+wl]
+				# print subword
+				wordcount +=1
+				if subword in tempdict:
+					tempdict[subword] -=1
+					if tempdict[subword] < 0:
 						break
-				else:
-					match = False
+				if wordcount == nw:
+					ret.append(i)
 					break
-			if match:
-				ret.append(i)
-			i+=1		
+				j+=wl
+				# print s[j:j+wl],tempdict
+			i+=1
+			# print wordcount
 		return ret
 sl = Solution()
 s = "barfoothefoobarman"
 words = ["foo", "bar"]
+# print sl.findSubstring(s,words)
+# print len(s),len(words)* len(words[0])
+# i = 0
+# d = {}
+# while i< len(words):
+# 	# print words[i]
+# 	if words[i] in d:
+# 		d[words[i]] +=1
+# 	else:
+# 		d[words[i]] =1
+# 	i+=1
+# print d
+s,words = "wordgoodgoodgoodbestword",["word","good","best","good"]
 print sl.findSubstring(s,words)
