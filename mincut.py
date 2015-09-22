@@ -13,7 +13,7 @@ class Solution(object):
 			for j in range(i,l):
 				if (s[i] == s[j] and (j-i<=1 or dp[i+1][j-1])):
 					dp[i][j] = True
-		
+		return dp[0][0]
 
 s = Solution()
-print s.minCut("a")
+print s.minCut("aaaaba")

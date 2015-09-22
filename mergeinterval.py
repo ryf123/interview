@@ -10,27 +10,21 @@ class Solution(object):
 		:type intervals: List[Interval]
 		:rtype: List[Interval]
 		"""
-		intervals = sorted(intervals,key=lambda x:x.start)
-		l = len(intervals)
-		visited = [False] *l
-		i = 0
 		ret = []
+		i,l = 0,len(intervals)
+		if l == 0:
+			return ret
+		intervals.sort(key=lambda x:x.start)
 		while i<l:
-			if visited[i]:
+			interval = intervals[i]
+			# print interval.start,interval.end
+			start,end  =interval.start,interval.end
+			while i+1 <l and intervals[i+1].start <= end:
 				i+=1
-				continue
-			start,end = intervals[i].start,intervals[i].end
-			i+=1
-			if i<l:
-				while(intervals[i].start <= end and i<l):
-					if intervals[i].end > end:
-						end = intervals[i].end
-					visited[i] = True
-					# print i,intervals[i].start,end
-					i+=1
-					if i ==l:
-						break
+				end = max(intervals[i].end,end)
+				# print end,i+1,intervals[i].end
 			ret.append(Interval(start,end))
+			i+=1
 		return ret
 s  = Solution()
 
