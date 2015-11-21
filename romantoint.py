@@ -23,7 +23,7 @@ class Solution(object):
 				total += d[symbol]
 			prev = symbol
 		return total
-tests = "LVIII"
+tests = "LIV"
 tests = tests.split(", ")
 s = Solution()
 for t in tests:

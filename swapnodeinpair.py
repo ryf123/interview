@@ -8,54 +8,38 @@ class Solution:
 	# @param {ListNode} head
 	# @return {ListNode}
 	def swapPairs(self, head):
-		if(head == None):
-			print "head is None"
-			return None
-		if head.next == None:
-			print "head next is None"
-			return head
-		if head.next.next == None:
-			temp = head
-			head = head.next
-			head.next = temp
-			head.next.next = None
-			print "two values"
-			return head
+		dummyhead = ListNode(0)
+		dummyhead.next = head
+		prev = dummyhead
 		current = head
-		prev = None
-		pp = None
-		pair = 0 # if pair is 1, then swap, else do nothing
-		while(current.next != None):
-			if current == head:
-				# swap the two nodes
-				head = current.next # head is 1
-				tempnext = current.next.next 
-				current.next.next = current # connect 1 to 0
-				current.next = tempnext # break connection from 0 to 1, connect 0 to 2
-				prev = current # prev is 0
-				current = tempnext # current is 2
-				print "first time"
-				print (head.val,prev.val,current.val)
-			else:
-				prev.next = current.next
-				temp = current.next.next
-				current.next.next = current
-				current.next = temp
-
-				prev = current
-				current = temp # current moves two steps foward
+		count = 0
+		if current == None:
+			return None
+		while (current.next != None):
+			count +=1
+			prev.next = current.next
+			next = current.next.next
+			current.next.next = current
+			prev = current
+			current.next = next
+			current = next
 			if current == None:
 				break
-		return head
+		return dummyhead.next
+
 s = Solution()
 temp = ListNode(0)
 current = ListNode(0)
 temp.next = current
 head = temp
-for i in range(0,1):
+for i in range(0,5):
 	current.next = ListNode(i)
 	current = current.next
 newhead = s.swapPairs(head)
+count = 0
 while(newhead != None):
 	print newhead.val
 	newhead = newhead.next
+	count +=1
+	if count == 100:
+		break
