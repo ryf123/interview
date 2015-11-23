@@ -2,37 +2,42 @@ class Solution:
 	# @param {integer[][]} matrix
 	# @return {integer[]}
 	def spiralOrder(self, matrix):
-		def spiral(x,y,row,col):
-			for j in range(y,y+col):
-				self.ret.append(self.matrix[x][j])
-			if x+1 < x+row:
-				for i in range(x+1,x+row):
-					# print i,y+col-1
-					self.ret.append(self.matrix[i][y+col-1])
-			if y+col-2 > y and row != 1:
-				for j in range(y+col-2,y,-1):
-					# print x+row-1,j
-					self.ret.append(self.matrix[x+row-1][j])
-			if x+row-1 > x and col != 1:
-				for i in range(x+row-1,x,-1):
-					# print i,y
-					self.ret.append(self.matrix[i][y])
-			if row>2 and col>2:
-				# print x,y,row,col
-				spiral(x+1,y+1,row-2,col-2)
+		def spiral(row,col):
+			left,right,top,bottom = 0,col,0,row
+			while left<=right and top<=bottom:
+				i = left
+				while i<=right:
+					self.ret.append(self.matrix[top][i])
+					i+=1
+				top +=1
+				i = top
+				while i<=bottom:
+					self.ret.append(self.matrix[i][right])
+					i +=1
+				right -=1
+				i = right
+				while i>=left and top<=bottom:
+					self.ret.append(self.matrix[bottom][i])
+					i -=1
+				bottom -=1
+				i = bottom
+				while i>=top and left<=right:
+					self.ret.append(self.matrix[i][left])
+					i-=1
+				left +=1
 		self.ret = []
 		self.matrix = matrix
 		m = len(matrix)
 		if m == 0:
 			return []
 		n = len(matrix[0])
-		spiral(0,0,m,n)
+		spiral(m-1,n-1)
 		return self.ret
 s = Solution()
 matrix = []
-for x in xrange(40):
+for x in xrange(5):
 	temp = []
-	for y in xrange(3):
+	for y in xrange(1):
 		temp.append(y*10)
 	matrix.append(temp) 
 # matrix = [matrix1,matrix2,matrix3,matrix4]
