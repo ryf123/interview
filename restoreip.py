@@ -1,4 +1,3 @@
-import re
 class Solution(object):
 	def restoreIpAddresses(self, s):
 		"""
@@ -8,7 +7,12 @@ class Solution(object):
 		pattern = "^\d$|^[1-9]\d$|^1\d\d$|^2[0-4][0-9]$|^25[0-5]$"
 				  # "^\d$|^[1-9]\d$|^1\d\d$|^2[0-5][0-5]$"
 		def match(ips):
-			return True if re.match(pattern,ips) else False
+			if len(ips) >1 and ips[0] == "0":
+				return False
+			if len(ips) >3:
+				return False
+			num = int(ips)
+			return True if num>=0 and num<=255 else False
 		def breakip(ips,sol):
 			# print sol
 			if len(sol) > 4:
@@ -29,4 +33,5 @@ class Solution(object):
 		breakip(s,[])
 		return self.ret
 s = Solution()
-print s.restoreIpAddresses("172162541")
+# print s.restoreIpAddresses("172162541")
+print s.restoreIpAddresses("001001")
