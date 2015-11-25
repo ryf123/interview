@@ -24,6 +24,6 @@ class Solution(object):
 		# return [map(int,x) for x in self.ret] +[[]]
 		return self.ret+[[]]
 s = Solution()
-nums = [1,1,1,1]
+nums = [1,2,2]
 print s.subsetsWithDup(nums)
 
