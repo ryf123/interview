@@ -9,19 +9,27 @@ class Solution:
 	# @param {integer} k
 	# @return {integer}
 	def kthSmallest(self, root, k):
-		def inorder(node):
-			nodelist = []
-			if node == None:
-				return []
-			nodelist +=inorder(node.left)
+		nodelist = []
+		node = root
+		while node:
 			nodelist.append(node)
-			nodelist +=inorder(node.right)
-			return nodelist
-		inorderlist = inorder(root)
-		ret =  inorderlist[k-1]
-		return ret.val
+			node = node.left
+		i = 0
+		while i<k and len(nodelist):
+			node = nodelist.pop()
+			i+=1
+			right = node.right
+			while right:
+				nodelist.append(right)
+				right = right.left
+			if i==k:
+				return node.val
+		return None
+
+
+
 
 s = Solution()
 root = TreeNode(1)
-# root.right = TreeNode(2)
-print s.kthSmallest(root,1)
+root.right = TreeNode(2)
+print s.kthSmallest(root,2).val

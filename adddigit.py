@@ -4,16 +4,11 @@ class Solution(object):
 		:type num: int
 		:rtype: int
 		"""
-		num = str(num)
-		
-		if len(num) >1:
-			while(len(num) >1):
-				total = 0
-				for n in num:
-					total+=int(n)
-				num = str(total)
-		else:
-			return int(num)
-		return total
+		if num>=9 and num % 9 == 0:
+			return 9
+		return num-num/9*9
 s= Solution()
-print s.addDigits(49)
+assert(s.addDigits(49)==4)
+assert(s.addDigits(38)==2)
+assert(s.addDigits(9)==9)
+assert(s.addDigits(9)==9)   
