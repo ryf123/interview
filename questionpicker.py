@@ -1,11 +1,31 @@
-from pyquery import PyQuery
+# from pyquery import PyQuery
 import re
 import random
-from urllib2 import *
+import urllib2
+from BeautifulSoup import BeautifulSoup
+
 class QuestionPicker:
 	def __init__(self):
-		self.questions = []
-		self.readfile()
+		self.questions = {}
+		# self.readfile()
+	def readwebpage(self):
+		lc_url = "https://leetcode.com/problemset/algorithms/"
+		r = urllib2.urlopen(lc_url)
+		soup = BeautifulSoup(r.read())
+		for tr in soup('table')[1].tbody('tr'):
+			if len(tr('td')) ==5:
+				if not tr.i:
+					prefix = "/problems/"
+					name = tr.a["href"][len(prefix):-1]
+					self.questions[name] = [tr('td')[1].text,tr('td')[3].text,tr('td')[4].text]
+			else:
+				print len(tr.td)
+	def getquestionbfsoup(self,name):
+		urlstr = "https://leetcode.com/problems/"+name
+		r = urllib2.urlopen(urlstr)
+		soup = BeautifulSoup(r.read())
+		if len(soup("meta"))>=3:
+			print soup("meta")[2]["content"].encode('utf-8').strip()
 	def readfile(self):
 		pattern = "^\d{1,3}\t(.*)\t\d{2}"
 		with open("leetcode.txt","r") as f:
@@ -14,6 +34,7 @@ class QuestionPicker:
 				if m:
 					self.questions.append(m.groups(1)[0])
 	def generateRandom(self):
+		print random.randint(1,255)
 		index = int(random.uniform(0,len(self.questions)-1))
 		count = 0
 		while not self.getquestion(self.questions[index]):
@@ -42,5 +63,8 @@ class QuestionPicker:
 			return False
 		return True
 qp = QuestionPicker()
-qp.generateRandom()
+qp.readwebpage()
+for key in qp.questions:
+	print key,qp.questions[key]
+	qp.getquestionbfsoup(key)
 # qp.getquestion("Intersection-of-Two-Linked-Lists")
