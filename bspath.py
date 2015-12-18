@@ -5,28 +5,25 @@ class TreeNode(object):
         self.left = None
         self.right = None
 
-class Solution(object):
-	def binaryTreePaths(self, root):
-		"""
-		:type root: TreeNode
-		:rtype: List[str]
-		"""
-		def walk(node,path):
-			if node.left == None and node.right == None:
-				self.ret.append(path+[str(node.val)])
-			if node.left  != None:
-				walk(node.left,path+[str(node.val)])
-			if node.right != None:
-				walk(node.right,path+[str(node.val)])
-			return
-		if root == None:
-			return []
-		self.ret = []
-		walk(root,[])
-		retlist = []
-		for r in self.ret:
-			retlist.append("->".join(r))
-		return retlist
+class Solution:
+    # @param {TreeNode} root the root of the binary tree
+    # @return {List[str]} all root-to-leaf paths
+    def binaryTreePaths(self, root):
+        # Write your code here
+        self.ret = []
+        self.dfs(root,[])
+        return self.ret
+    def dfs(self,node,path):
+        if node == None:
+            return
+        path.append(str(node.val))
+        if node.left != None:
+            self.dfs(node.left,path)
+        if node.right != None:
+            self.dfs(node.right,path)
+        if node.left == None and node.right == None:
+            self.ret.append("->".join(path))
+        path.pop()
 s = Solution()
 root = TreeNode(1)
 root.right  = TreeNode(2)

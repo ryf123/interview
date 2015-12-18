@@ -5,27 +5,34 @@ class Interval(object):
 		self.end = e
 
 class Solution(object):
-	def insert(self, intervals, newInterval):
+	def insert(self, intervals,newInterval):
 		"""
 		:type intervals: List[Interval]
-		:type newInterval: Interval
 		:rtype: List[Interval]
 		"""
-		start,end = newInterval.start,newInterval.end
-		i = 0
+		intervals.append(newInterval)
+		intervals = sorted(intervals,key=lambda x:x.start)
 		l = len(intervals)
-		while i<l and intervals[i].start < start:
+		visited = [False] *l
+		i = 0
+		ret = []
+		while i<l:
+			if visited[i]:
+				i+=1
+				continue
+			start,end = intervals[i].start,intervals[i].end
 			i+=1
-		if i-1>=0 and start>= intervals[i-1].start and start <= intervals[i-1].end:
-			i=i-1
-			start = intervals[i].start
-		j = i
-		while j<l and intervals[j].end <= end:
-			j+=1
-		if j <l and end >= intervals[j].start and end<= intervals[j].end:
-			end = intervals[j].end
-			j = j+1
-		return intervals[:i] + [Interval(start,end)] + intervals[j:]
+			if i<l:
+				while(intervals[i].start <= end and i<l):
+					if intervals[i].end > end:
+						end = intervals[i].end
+					# visited[i] = True
+					# print i,intervals[i].start,end
+					i+=1
+					if i ==l:
+						break
+			ret.append(Interval(start,end))
+		return ret
 		
 
 intervals = [Interval(1,2),Interval(2,6),Interval(8,10),Interval(15,18)]

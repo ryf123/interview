@@ -6,31 +6,26 @@ class Interval(object):
 
 class Solution(object):
 	def merge(self, intervals):
-		"""
-		:type intervals: List[Interval]
-		:rtype: List[Interval]
-		"""
+		def compare(a,b):
+			return -1 if a.start < b.start else 1 
+		intervals = sorted(intervals,cmp=compare)
+		prevstart,prevend = None,None
 		ret = []
-		i,l = 0,len(intervals)
-		if l == 0:
-			return ret
-		intervals.sort(key=lambda x:x.start)
-		while i<l:
-			interval = intervals[i]
-			# print interval.start,interval.end
-			start,end  =interval.start,interval.end
-			while i+1 <l and intervals[i+1].start <= end:
-				i+=1
-				end = max(intervals[i].end,end)
-				# print end,i+1,intervals[i].end
+		for interval in intervals:
+			start,end = interval.start,interval.end
+			if prevend != None:
+				if prevend >= start:
+					start,end = prevstart,end
+					previnterval = ret.pop()
+					end = max(previnterval.end,end)
 			ret.append(Interval(start,end))
-			i+=1
+			prevstart,prevend = start,end
 		return ret
-s  = Solution()
-
+s = Solution()
 intervals = [Interval(8,10),Interval(1,3),Interval(15,18),Interval(2,6)]
-interval2 = [Interval(2,6),Interval(6,10)]
+interval2 = [Interval(0,0),Interval(0,0),Interval(0,6)]
 interval3 = [Interval(1,100),Interval(1,2),Interval(1,10)]
+# [[0,0],[1,2],[5,5],[2,4],[3,3],[5,6],[5,6],[4,6],[0,0],[1,2],[0,2],[4,5]]
 tests = [intervals,interval2,interval3]
 for t in tests:
 	ret = s.merge(t)

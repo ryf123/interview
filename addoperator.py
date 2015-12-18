@@ -9,6 +9,7 @@ class Solution(object):
 		self.l = len(nums)
 		divides = self.divide(0,nums)
 		self.ret = []
+		print len(divides)
 		for divide in divides:
 			# self.getoperator(len(divide))
 			self.cal(divide,self.getoperator(len(divide)),target)
@@ -45,9 +46,10 @@ class Solution(object):
 		return	
 	# first divide the digits
 	def divide(self,start,nums):
-		if start == self.l-1:
-			return [[nums[start]]]
 		result = []
+		if start == self.l:
+			return []
+		result.append([nums[start:]])
 		for i in range(start,self.l):
 			rets = self.divide(i+1,nums)
 			for r in rets:
@@ -57,7 +59,8 @@ s = Solution()
 # print s.getoperator(3)
 tests = [["123", 6],["232", 8],["00",0],["3456237490", 9191],["1000000009", 9]]
 for t in tests:
+	t = tests[3]
 	r  = s.addOperators(t[0],t[1])
-	# print r
-	# break
+	print r
+	break
 	

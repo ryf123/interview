@@ -4,33 +4,27 @@ class Solution(object):
 		:type s: str
 		:rtype: bool
 		"""
+		pairs = ["()","[]","{}"]
+		d = {}
+		validsymbol = {}
 		stack = []
-		for x in s:
-			if x == ")":
-				if stack:
-					if stack.pop() != "(":
-						return False
-				else:
+		for pair in pairs:
+			d[pair[1]] = pair[0]
+			validsymbol[pair[1]] = True
+			validsymbol[pair[0]] = True
+
+		for c in s:
+			if c not in validsymbol:
+				return False
+			if c in d:
+				if len(stack) == 0:
 					return False
-			elif x =="]":
-				if stack:
-					if stack.pop() != "[":
-						return False
-				else:
-					return False
-			elif x == "}":
-				if stack:
-					if stack.pop() != "{":
-						return False
-				else:
+				if stack.pop() != d[c]:
 					return False
 			else:
-				stack.append(x)
-			print stack
-		print stack
-		if stack:
-			return False
-		else:
-			return True
+				stack.append(c)
+		return len(stack)==0
+
+
 s = Solution()
-print s.isValid("()[]{}")
+print s.isValid("()[){}")

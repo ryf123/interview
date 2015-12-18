@@ -5,17 +5,19 @@ class Solution(object):
 		:type nums: List[int]
 		:rtype: int
 		"""
-		self.nums = nums
-		return self.find(0,len(nums))
-	def find(self,start,end):
+		l = len(nums)
+		assert(l>=3)
+		start,end = 1,l-2
+		return self.findPeakElement(start,end)
+	def binarysearch(self,start,end):
 		if start == end:
 			return start
 		mid = (start+end)/2
-		prev = self.nums[mid-1] if mid>0 else -sys.maxint
-		next = self.nums[mid+1] if mid+1< len(self.nums) else -sys.maxint
-		if self.nums[mid] < prev:
-			return self.find(start,mid-1)
-		elif self.nums[mid] < next:
-			return self.find(mid+1,end)
+		left,right,num = nums[mid-1],nums[mid+1],nums[mid]
+		if mid <right:
+			return self.binarysearch(mid+1,end)
+		elif mid<left:
+			return self.binarysearch(start,mid-1)
 		else:
 			return mid
+
