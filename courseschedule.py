@@ -1,3 +1,4 @@
+from collections import defaultdict
 class Solution(object):
 	def findOrder(self, numCourses, prerequisites):
 		"""
@@ -5,30 +6,40 @@ class Solution(object):
 		:type prerequisites: List[List[int]]
 		:rtype: List[int]
 		"""
-		ret = []
-		nopre = []
-		d = {}
-		for x in xrange(numCourses):
-			d[x] = {}
+		self.d = defaultdict(list)
 		for prerequisite in prerequisites:
-			d[prerequisite[0]][prerequisite[1]] = True
-		for key in d:
-			if len(d[key]) == 0:
-				nopre.append(key)
-		while len(nopre):
-			course = nopre.pop()
-			del d[course]
-			ret.append(course)
-			for key in d:
-				if course in d[key]:
-					del d[key][course]
-					if len(d[key]) == 0:
-						nopre.append(key)
-		# print ret
-		return ret if len(ret) == numCourses else []
+			self.d[prerequisite[0]].append(prerequisite[1])
+		self.processed = []
+		self.visited = {}
+		for course in xrange(numCourses):
+			if not self.dfs(course):
+				return []
+		if numCourses == len(self.processed):
+			return self.processed
+		else:
+			return []
+	def dfs(self,course):
+		if course in self.visited and self.visited[course]:
+			return False
+		if course in self.processed:
+			return True
+		self.visited[course] = True
+		if course in self.d:
+			for prerequisite in self.d[course]:
+				if not self.dfs(prerequisite):
+					return False
+		self.visited[course] = False
+		self.processed.append(course)
+		return True
+
+
 
 
 s = Solution()
 numCourses = 3
 prerequisites = [[1,0],[0,2],[1,2]]
+numCourses = 1
+prerequisites = []
+numCourses = 2
+prerequisites = [[0,1]]
 print s.findOrder(numCourses,prerequisites)

@@ -1,14 +1,13 @@
 class Solution(object):
 	def convertToTitle(self, n):
-
-		alphabet = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-		base =1
-		res = ""
+		ret = ""
+		alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 		while n:
-			res += alphabet[(n-1)%26] 
+			ret = alphabet[(n-1)%26] +ret
 			n = (n-1)/26
-		return res[::-1]
+		return ret 
+
 s = Solution()
-for x in range(26*26,26*26+28):
+for x in range(26,26+28):
 	print s.convertToTitle(x)
 

@@ -8,4 +8,4 @@ class Solution:
         ret =  "".join(sorted(numsstring,cmp=compare))
         return ret.lstrip("0") or "0"
 s = Solution()
-print s.largestNumber([0])
+assert(s.largestNumber([3, 30, 34, 5, 9]) == "9534330") 

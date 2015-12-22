@@ -1,3 +1,4 @@
+import sys
 # Definition for a binary tree node.
 class TreeNode:
     def __init__(self, x):
@@ -9,17 +10,12 @@ class Solution:
 	# @param {TreeNode} root
 	# @return {integer}
 	def maxPathSum(self, root):
-		if root != None:
-			self.maxpath = root.val
-		else:
-			return 0
+		self.maxpath = -sys.maxint
 		self.solve(0,root)
 		return self.maxpath
 	def solve(self,total,node):
-
 		if node == None:
 			return 0
-		# print total,node.val,self.maxpath
 		leftpath = self.solve(total,node.left)
 		rightpath = self.solve(total,node.right)
 		self.maxpath = max([leftpath+node.val,rightpath+node.val,leftpath+rightpath+node.val,self.maxpath])

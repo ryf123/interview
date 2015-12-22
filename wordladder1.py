@@ -10,27 +10,27 @@ class Solution(object):
 		wordDict = list(wordDict)
 		wordDict.append(beginWord)
 		wordDict.append(endWord)
-		if len(wordDict) == 0:
-			return False
-		l = len(wordDict[0])
-		d = {}
-		stack = [[beginWord,1]]
-		for word in wordDict:
-			d[word] = list()
-		level = 1
-		visited = {}
-		while (len(stack)):
-			word1,level = stack.pop(0)
-			if word1 == endWord:
-				return level
-			for x in xrange(l):
-				for c in xrange(26):
-					c = chr(97+c)
-					word2 = word1[:x]+c+word1[x+1:]
-					if word2 in d and word2 not in visited:
-						stack.append([word2,level+1])
-						visited[word2] = True
-		return 0
+		self.d = {}
+		for w in wordDict:
+			self.d[w] = True
+		self.endword = endWord
+		self.visited = {}
+		self.level = None
+		self.walk(beginWord,1)
+		return self.level if self.level != None else 0
+	def walk(self,word,level):
+		print word
+		if word == self.endword:
+			self.level = min(self.level,level) if self.level != None else level
+		self.visited[word] = True
+		for i,w in enumerate(word):
+			for c in xrange(26):
+				newword = word[:i]+chr(97+c)+word[i+1:]
+				if newword in self.d and newword not in self.visited :
+					self.walk(newword,level+1)
+		del self.visited[word]
+
+
 s= Solution()
 start = "sand"
 end = "acne"

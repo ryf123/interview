@@ -12,4 +12,4 @@ class Solution(object):
 			p+=1
 		return n<<p
 s  = Solution()
-print s.rangeBitwiseAnd(90,100)
+print s.rangeBitwiseAnd(1,8)

@@ -14,7 +14,6 @@ class Solution(object):
 			if total < 0:
 				start = i+1
 				total = 0
-			# print gas[i],cost[i],total,netsum,i,start
 		if netsum < 0:
 			return -1
 		else:

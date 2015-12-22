@@ -14,11 +14,11 @@ class Solution(object):
 			tempminnum = minnum
 			maxnum = max([tempminnum*x,tempmaxnum*x,x])
 			minnum = min([tempmaxnum*x,tempminnum*x,x])
-			# print maxnum,minnum,res
+			print maxnum,minnum,res
 			res = max(res,maxnum)
 		return res
 s= Solution()
-nums = [-1,-2,-3,-4]
+nums = [1,2,-1,-5,-10,100]
 print s.maxProduct(nums)
 
 
