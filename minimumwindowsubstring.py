@@ -7,39 +7,49 @@ class Solution(object):
 		:type t: str
 		:rtype: str
 		"""
+		d = {}
 		worddict = Counter()
 		lt = len(t)
 		for tt in t:
 			worddict[tt]+=1
-		redundantdict = Counter()
-		windowstack = []
+			d[tt] = True
 		minWindowlen = sys.maxint
-		left,right = 0,0
-		noredundantlen = 0
-		redundantcount = 0
-		for i,letter in enumerate(s):
-			if letter in worddict:	
-				windowstack.append([letter,i])
-				if worddict[letter] == 0:
-					redundantdict[letter] +=1
-					redundantcount +=1
-				else:
+		minindex = None
+		left,right = 0,-1
+		count = len(t)
+		while right < len(s) and left<len(s):
+			if count:
+				right+=1
+				if right >= len(s):
+					continue
+				letter  = s[right]
+				if letter in d:
 					worddict[letter] -=1
-					noredundantlen +=1
-				if noredundantlen ==lt:
-					while len(windowstack) and redundantdict[windowstack[0][0]] > 0:
-						prevleft = windowstack.pop(0)
-						redundantdict[prevleft[0]] -=1
-						redundantcount-=1
-					if windowstack[-1][1] - windowstack[0][1] + 1 < minWindowlen: left,right = windowstack[0][1],windowstack[-1][1] minWindowlen = windowstack[-1][1] - windowstack[0][1] + 1 # print windowstack
-		if noredundantlen !=lt:
+					if worddict[letter] >= 0:
+						count-=1
+			else:
+				if left>=len(s):
+					continue
+				if right-left <minWindowlen:
+					minWindowlen = right-left
+					minindex = left
+				letter = s[left]
+				if letter in d:
+					worddict[letter] +=1
+					if worddict[letter] >0:
+						count +=1
+				left+=1
+		if minindex == None:
 			return ""
-		if windowstack[-1][1] - windowstack[0][1] + 1 < minWindowlen:
-			left,right = windowstack[0][1],windowstack[-1][1]
-		return s[left:right+1]
+		return s[minindex:minindex+minWindowlen+1]
+
+
+				
 sl = Solution()
 s = "bba"
 t = "ab"
 s = "baba"
 t = "abb"
+s ="ADOBECODEBANC"
+t = "ABC"
 print sl.minWindow(s,t)

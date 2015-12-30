@@ -9,27 +9,18 @@ class Solution(object):
 		l,i = len(nums),0
 		if l ==0:
 			return []
-		numstack = []
-		maxstack = [] # the last digit is current max
-		dnum = {}
-		while i<l:
-			num = nums[i]
-			heapq.heappush(numstack,-num)
-			if num not in dnum:
-				dnum[num] =1
-			else:
-				dnum[num] +=1
-			
-			if i >= k:
-				# print dnum,numstack
-				dnum[nums[i-k]] -=1
-				while dnum[-numstack[0]] == 0:
-					heapq.heappop(numstack)
-			maxstack.append(-numstack[0])
-			i+=1
+		window = []
+		maxstack = []
+		for i,num in enumerate(nums):
+			if window and window[0][0] <= i-k:
+				window.pop(0)
+			while window and window[-1][1] < num:
+				window.pop() 
+			window.append([i,num])
+			maxstack.append(window[0][1])
 		return maxstack[k-1:]
 s =Solution()
-nums,k = [1,3,-1,-3,5,3,6,7],2
+nums,k = [1,3,-1,-3,5,3,6,7],5
 print s.maxSlidingWindow(nums,k)
 
 

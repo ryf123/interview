@@ -2,19 +2,25 @@ class Solution:
 	# @param {string} s
 	# @return {string}
 	def shortestPalindrome(self, s):
-		A = s + s[::-1]
-		cnt = [0]
+		# A = s + s[::-1]
+		A = s
 		l = len(A)
-		for i in range(1,l):
-			index = cnt[i-1]
-			while(index >0):
-				if (A[index] == A[i]):
-					if index < len(s):
-						break
-				index =cnt[index-1]
-			cnt.append(index + 1 if A[index] ==A[i] else 0)
-		print cnt
-		prefixl =  cnt[-1]
-		return s[prefixl:][::-1]+s
+		print A,l
+		table = [0]*(l+1)
+		i = 1
+		cnt = 0
+		pos = 2
+		table[0] = -1
+		while pos<l+1:
+			if(A[pos-1] == A[cnt]):
+				table[pos] = cnt+1
+				cnt+=1
+				pos+=1
+			elif cnt>0:
+				cnt = table[cnt]
+			else:
+				table[pos] = 0
+				pos +=1
+		print table
 s = Solution()
-print s.shortestPalindrome("aba")
+print s.shortestPalindrome("abab")
