@@ -35,14 +35,20 @@ class Solution:
 		return self.ret
 s = Solution()
 matrix = []
-for x in xrange(5):
+count = 0
+for x in xrange(3):
 	temp = []
-	for y in xrange(1):
-		temp.append(y*10)
+	for y in xrange(3):
+		temp.append(count)
+		count+=1
 	matrix.append(temp) 
+print matrix
+print s.spiralOrder(matrix)
+if __name__ == '__main__':
+	main()
 # matrix = [matrix1,matrix2,matrix3,matrix4]
-for m in matrix:
-	print m
-ret  =  s.spiralOrder(matrix)
-print ret
-print len(ret)
+# for m in matrix:
+# 	print m
+# ret  =  s.spiralOrder(matrix)
+# print ret
+# print len(ret)

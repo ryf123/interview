@@ -9,22 +9,18 @@ class Solution:
 	# @param {integer} k
 	# @return {integer}
 	def kthSmallest(self, root, k):
-		nodelist = []
-		node = root
-		while node:
-			nodelist.append(node)
-			node = node.left
-		i = 0
-		while i<k and len(nodelist):
-			node = nodelist.pop()
-			i+=1
-			right = node.right
-			while right:
-				nodelist.append(right)
-				right = right.left
-			if i==k:
-				return node.val
-		return None
+		self.count = 0
+		self.ret = None
+		self.dfs(root,k)
+		return self.ret
+	def dfs(self,node,k):
+		if not node:
+			return
+		self.dfs(node.left,k)
+		self.count+=1
+		if self.count == k:
+			self.ret = node
+		self.dfs(node.right,k)
 
 
 

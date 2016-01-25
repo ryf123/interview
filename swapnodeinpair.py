@@ -13,9 +13,7 @@ class Solution:
 		prev = dummyhead
 		current = head
 		count = 0
-		if current == None:
-			return None
-		while (current.next != None):
+		while (current and current.next != None):
 			count +=1
 			prev.next = current.next
 			next = current.next.next
@@ -23,8 +21,6 @@ class Solution:
 			prev = current
 			current.next = next
 			current = next
-			if current == None:
-				break
 		return dummyhead.next
 
 s = Solution()

@@ -28,13 +28,12 @@ class Solution:
         current = head
         prev = None
         for i in range(0,l/2):
-            if i < l-i-1:
-                start = stack[i]
-                end = stack[l-i-1]
-                if prev != None:
-                    prev.next = start
-                start.next = end
-                prev = end
+            start = stack[i]
+            end = stack[l-i-1]
+            if prev != None:
+                prev.next = start
+            start.next = end
+            prev = end
             # if i!=0:
             #     current.next = a[i]
             #     current = current.next
@@ -46,6 +45,7 @@ class Solution:
                 prev.next = stack[l/2]
                 prev = prev.next
             prev.next = None
+            
 head = ListNode(-1)
 current = head
 for x in xrange(3):

@@ -5,37 +5,20 @@ class Solution(object):
 		:type p: str
 		:rtype: bool
 		"""
-		i = len(p)-1
-		j = len(s)-1
-		if i ==-1:
-			return j==-1
-		star = False
-		while j>=0:
-			if i>=0 and (p[i] == s[j] or p[i] == "."):
-				i-=1
-				j-=1
-			elif i>=0 and p[i] == "*":
-				if i == 0:
-					break
-				if self.isMatch(s[:j+1],p[:i-1]):
-					return True
-				if i-1>=0 and (p[i-1] =="."  or p[i-1] ==s[j]):
-					j-=1
-					i-=1
-					star = True
-					starPos = i
-				else:
-					return False
-			elif star:
-				if p[starPos] == s[j] or p[starPos] == ".":
-					i = starPos 
-			else:
-				return False
-		star = False
-		while i>=0 and p[i] =="*":
-			star = True
-			i-=1
-		return i == -1 or (star and i==0)
+		ls,lp = len(s),len(p)
+		if lp == 0:
+			return ls == 0
+		ps = ls-1
+		pp = lp-1
+		if ls and (s[ps] == p[pp] or p[pp] == "."):
+			return self.isMatch(s[:ps],p[:pp])
+		elif p[pp] == "*":
+			if ls:
+				if pp-1>=0 and (p[pp-1] == "." or p[pp-1] == s[ps]):
+					return self.isMatch(s,p[:pp-1]) or self.isMatch(s[:ps],p)
+			return self.isMatch(s,p[:pp-1])
+		return False
+
 
 
 s = Solution()

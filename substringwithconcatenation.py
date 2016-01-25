@@ -20,37 +20,34 @@ class Solution:
 				d[word] +=1
 		
 		i = 0
-		mark = [0] * sl
-		for i,ss in enumerate(s):
-			word = s[i:i+wl]
-			if word in d:
-				mark[i] = 1
-		i=0
-		while( i < sl - csl+1):
-			if not mark[i]:
-				i+=1
-				continue
-			tempdict  = d.copy()
-			j = i
-			counter = 0 
-			while(tempdict):
+		while( i < wl):
+			left = i
+			tempdict  = {}
+			counter = 0
+			for j in xrange(i,sl-wl+1,wl):
 				substring = s[j: j+wl]
-				if substring in tempdict:
-					tempdict[substring] -=1
-					if tempdict[substring] == 0:
-						del tempdict[substring]
-					j+=wl
+				if substring in d:
+					if substring in tempdict:
+						tempdict[substring] +=1
+					else:
+						tempdict[substring] = 1
+					counter +=1
+					while tempdict[substring] > d[substring]:
+						tempdict[s[left:left+wl]] -=1
+						left += wl
+						counter -=1
+					if counter == nw:
+						ret.append(left)
 				else:
-					j+=1
-					break
-			if not tempdict:
-				ret.append(i)
-				i+= 1
-			else:
-				i+=1
+					left = j+wl
+					counter = 0
+					tempdict = {}
+			i+=1
 		return ret
 
 sl = Solution()
 s ="barfoothefoobarman"
 words = ["foo","bar"]
+# s = "barfoofoobarthefoobarman"
+# words = ["bar","foo","the"]
 print sl.findSubstring(s,words)

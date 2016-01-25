@@ -4,27 +4,26 @@ class Solution(object):
 		:type nums: List[int]
 		:rtype: int
 		"""
-		l = len(nums)
 		d = {}
 		maxlen = 0
 		for num in nums:
 			d[num] =True
 		for key in d:
 			if d[key]:
-				j = 1
-				currentlen = 1
-				while (key+j) in d:
-					currentlen +=1
-					d[key+j] = False
-					j+=1
-					# print j
-				k=1
-				while (key-k) in d:
-					currentlen +=1
-					d[key-k] = False
-					k+=1
-					# print k
-				maxlen = max(currentlen,maxlen)
+				d[key] = False
+				start,end = key-1,key+1
+				start_in = start in d
+				end_in = end in d
+				while start_in or end_in:
+					if start in d:
+						d[start] = False
+						start-=1
+						start_in = start in d
+					if end in d:
+						d[end] = False
+						end+=1
+						end_in = end in d 
+				maxlen = max(end-start-1,maxlen)
 		return maxlen
 
 

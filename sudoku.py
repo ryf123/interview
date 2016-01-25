@@ -2,6 +2,7 @@ class Solution:
 	# @param {character[][]} board
 	# @return {void} Do not return anything, modify board in-place instead.
 	def solveSudoku(self, board):
+		self.count = 0
 		l = len(board)
 		if l == 9:
 			if len(board[0]) == 9:
@@ -10,6 +11,7 @@ class Solution:
 		return False
 	def solve(self,board,row,col):
 		# print (row,col,board)
+		self.count+=1
 		if row == 9:
 			return True
 		if col == 8:
@@ -46,8 +48,12 @@ class Solution:
 		return True
 s = Solution()
 board = []
-for row in ["..9748...","7........",".2.1.9...","..7...24.",".64.1.59.",".98...3..","...8.3.2.","........6","...2759.."]:
+m = ["..9748...","7........",".2.1.9...","..7...24.",".64.1.59.",".98...3..","...8.3.2.","........6","...2759.."]
+m = ["...2.....",".94..7.8.","72.59...4","..2..3.4.",".6..8..2.",".3.4..9..","3...19.78",".1.8..63.",".....2..."]
+for row in m:
 	board.append(list(row))
 print board
 print s.solveSudoku(board)
-print board
+for row in board:
+	print row
+print s.count

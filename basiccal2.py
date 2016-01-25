@@ -26,17 +26,23 @@ class Solution(object):
 				if operator == "*":
 					numstack[i],numstack[i+1] = 0,num1*num2
 				else:
-					numstack[i],numstack[i+1] = 0,num1/num2
-				operators[i] = operators[i-1] if i-1 >=0 else "+"
+					ret = abs(num1)/num2
+					if num1 < 0:
+						ret = -ret 
+					numstack[i],numstack[i+1] = 0,ret
+			elif operator== "-":
+				numstack[i+1] = 0-numstack[i+1]
+				# operators[i] = operators[i-1] if i-1 >=0 else "+"
 		if len(numstack) == 0:
 			return 0
-		total = numstack[0]
-		for i,operator in enumerate(operators):
-			if operator == "+":
-				total += numstack[i+1]
-			else:
-				total -= numstack[i+1]
-		return total
+		return sum(numstack)
+		# total = numstack[0]
+		# for i,operator in enumerate(operators):
+		# 	if operator == "+":
+		# 		total += numstack[i+1]
+		# 	else:
+		# 		total -= numstack[i+1]
+		# return total
 
 
 

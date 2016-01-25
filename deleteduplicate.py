@@ -1,34 +1,31 @@
 # Definition for singly-linked list.
-class ListNode(object):
+class ListNode:
 	def __init__(self, x):
 		self.val = x
 		self.next = None
-from collections import Counter
-class Solution(object):
+
+class Solution:
+	# @param {ListNode} head
+	# @return {ListNode}
 	def deleteDuplicates(self, head):
-		"""
-		:type head: ListNode
-		:rtype: ListNode
-		"""
-		c = Counter()
 		current = head
-		while current:
-			c[current.val] +=1
-			current = current.next
-		dummy_head = ListNode(1)
-		dummy_head.next = head 
-		current = head
-		prev = dummy_head
-		while current:
-			if c[current.val] >1:
-				current = current.next
-				prev.next = current
+		dummy = ListNode(0)
+		dummy.next = head
+		prev = dummy
+		while(current != None):
+			duplicate = False
+			while (current and current.next and current.val == current.next.val):
+				current.next = current.next.next
+				duplicate = True
+			if duplicate:
+				prev.next = current.next if current else None
 			else:
 				prev = current
-				current = current.next
-		return dummy_head.next
+			current = current.next if current else None
+		return dummy.next
 s = Solution()
 head = ListNode(1)
-head.next = ListNode(2)
+head.next = ListNode(1)
 head.next.next = ListNode(2)
+head.next.next.next = ListNode(2)
 print s.deleteDuplicates(head)

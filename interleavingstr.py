@@ -1,4 +1,4 @@
-class Solution:
+pclass Solution:
 	# @param {string} s1
 	# @param {string} s2
 	# @param {string} s3

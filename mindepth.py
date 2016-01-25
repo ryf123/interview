@@ -9,24 +9,17 @@ class Solution(object):
 		:type root: TreeNode
 		:rtype: int
 		"""
-		def findnode(node,depth):
-			if node.left == None and node.right == None:
-				# print node.val,depth
-				if self.mindepth == None:
-					self.mindepth = depth
-				else:
-					self.mindepth = min(self.mindepth,depth)
-			else:
-				# print depth,node.val
-				if node.left != None:
-					findnode(node.left,depth+1)
-				if node.right != None:
-					findnode(node.right,depth+1)
-		self.mindepth = None
 		if root == None:
 			return 0
-		findnode(root,1)
-		return self.mindepth
+		stack = [[root,1]]
+		while stack:
+			[node,height] = stack.pop(0)
+			if node.left == None and node.right == None:
+				return height
+			if node.left:
+				stack.append([node.left,height+1])
+			if node.right:
+				stack.append([node.right,height+1])
 s = Solution()
 root = TreeNode(1)
 root.left = TreeNode(2)
