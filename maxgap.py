@@ -12,7 +12,7 @@ class Solution(object):
 		minnum = min(nums)
 		maxgap = max(nums) - minnum
 		avggap = (maxgap) /(l)
-		bucketsize = maxgap/max(avggap,1)+1
+		bucketsize = l+1
 		buckets = [[] for x in xrange(bucketsize)]
 		for num in nums:
 			index = (num-minnum)/max(avggap,1)
