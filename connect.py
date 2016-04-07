@@ -12,24 +12,19 @@ class Solution(object):
 		:type root: TreeLinkNode
 		:rtype: nothing
 		"""
-		stack = [root]
-		while len(stack):
-			tempstack = []
-			prev = None
-			# print stack
-			while len(stack):
-				
-				node = stack.pop(0)
-				# print node.val
-				if node:
-					if node.left:
-						tempstack.append(node.left)
-					if node.right:
-						tempstack.append(node.right)
-				if prev != None:
-					prev.next = node
-				prev = node
-			stack = tempstack
+		head = root
+		while head != None:
+			dummyCurrent = TreeLinkNode(0)
+			current = dummyCurrent
+			while head != None:
+				if head.left != None:
+					current.next = head.left
+					current = current.next
+				if head.right != None:
+					current.next = head.right
+					current = current.next
+				head = head.next
+			head = dummyCurrent.next
 s = Solution()
 head = TreeLinkNode(1)
 head.left = TreeLinkNode(2)
