@@ -9,20 +9,18 @@ class Solution(object):
 		value = [1000,500,100,50,10,5,1]
 		for i,symbol in enumerate(symbols):
 			d[symbol] = value[i]
-		total  = 0
-		prev = None
-		for symbol in s[::-1]:
-
-			if prev != None:
-				# print symbols.index(prev),prev
-				if symbols.index(prev) < symbols.index(symbol):
-					total-= d[symbol]
-				else:
-					total += d[symbol]
+		total = 0
+		l = len(s)
+		characters = list(s)
+		for i in xrange(l):
+			c = characters[i]
+			if i+1 < l and d[c] < d[characters[i+1]]:
+				total -= d[c]
 			else:
-				total += d[symbol]
-			prev = symbol
+
+				total += d[c]
 		return total
+
 tests = "LIV"
 tests = tests.split(", ")
 s = Solution()
